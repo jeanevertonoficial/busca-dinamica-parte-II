@@ -1,5 +1,8 @@
 # loja
 
+>Necessário baixar a API
+
+>npm install vue-router --save
 ## Project setup
 ```
 npm install
