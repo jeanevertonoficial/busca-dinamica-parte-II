@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <header>
       <h2 class="centralizado">Cadastro</h2>
     </header>
@@ -11,7 +10,6 @@
 <script>
 
 export default {
-  name: "Cadastro"
 }
 
 </script>

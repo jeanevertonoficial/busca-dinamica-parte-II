@@ -5,10 +5,11 @@
            placeholder="filtre pelo título da foto">
     <ul class="lista-fotos">
       <!-- v-for="foto of fotos" -->
-      <li class="lista-fotos-item">
-        <meu-painel :titulo="foto.titulo">
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo"></imagem-responsiva>
-        </meu-painel>
+      <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
+        <painel :titulo="fotos.titulo">
+          <imagem-responsiva :url="fotos.url" :titulo="fotos.titulo"/>
+          <botao tipo="button" rotulo="Remover" @botaoAtivado="remove(fotos)"/>
+        </painel>
       </li>
     </ul>
   </div>
@@ -18,11 +19,13 @@
 
 import Painel from "../shared/painel/Painel";
 import imagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva";
+import Botao from "@/components/shared/botao/Botao";
 
 export default {
   components: {
-    'meu-painel': Painel,
-    'imagem-responsiva': imagemResponsiva
+    'painel': Painel,
+    'imagem-responsiva': imagemResponsiva,
+    'botao': Botao
   },
   data() {
     return {
@@ -42,6 +45,7 @@ export default {
       }
     }
   },
+  // conecxão com a API com as fotos
   created() {
 
     this.$http.get('http://localhost:3000/v1/fotos')
@@ -49,44 +53,49 @@ export default {
         .then(fotos => this.fotos = fotos, err => console.log(err));
   },
 
+  methods: {
+    remove(foto) {
+      alert('Imagem ' + foto.titulo + ' removida com Sucesso!' );
+    }
+  }
 
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-  height: 80vh;
-}
 
 .lista-fotos {
   list-style: none;
 }
 
+.lista-fotos{
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .lista-fotos .lista-fotos-item {
-  display: inline-block;
-  height: 200px;
   margin-bottom: 2rem;
 }
 
 .titulo {
   text-align: center;
   text-transform: uppercase;
-  color: #03490d;
+  color: rgba(229, 201, 18, 0.82);
+  margin: 3rem;
 }
 
 .filtro {
-  display: block;
-  width: 100%;
+  margin: auto;
+  display:flex;
+  justify-content: center;
+  text-align: center;
+  width: 60%;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #ffc400;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.96);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  margin-top: 1rem;
+  margin-bottom: 2.75rem;
 }
 
 </style>
