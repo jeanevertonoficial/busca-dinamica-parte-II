@@ -1,10 +1,10 @@
 <template>
   <div class="corpo">
     <meu-menu :rotas="routes"/>
-
     <transition name="pagina">
       <router-view></router-view>
     </transition>
+  <Footer/>
   </div>
 </template>
 
@@ -12,10 +12,12 @@
 
 import {routes} from "@/routes";
 import menu from "@/components/shared/menu/menu.vue";
+import Footer from "@/components/shared/footer/Footer";
 
 export default {
   components: {
-    'meu-menu': menu
+    'meu-menu': menu,
+    Footer
   },
   data() {
     return {

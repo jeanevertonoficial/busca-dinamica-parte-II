@@ -1,5 +1,6 @@
 <template>
   <div>
+    <section class="base">
     <h1 class="titulo">{{ titulo }}</h1>
     <input type="search" class="filtro" @input="filtro = $event.target.value"
            placeholder="filtre pelo título da foto">
@@ -8,10 +9,17 @@
       <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
         <painel :titulo="fotos.titulo">
           <imagem-responsiva :url="fotos.url" :titulo="fotos.titulo"/>
-          <botao tipo="button" rotulo="Remover" @botaoAtivado="remove(fotos)"/>
+          <botao
+              tipo="button"
+              rotulo="Remover"
+              @botaoAtivado="remove(fotos)"
+              v-bind:confirmacao="false"
+              estilo="remover"
+          />
         </painel>
       </li>
     </ul>
+    </section>
   </div>
 </template>
 
@@ -21,6 +29,7 @@ import Painel from "../shared/painel/Painel";
 import imagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva";
 import Botao from "@/components/shared/botao/Botao";
 
+
 export default {
   components: {
     'painel': Painel,
@@ -29,7 +38,7 @@ export default {
   },
   data() {
     return {
-      titulo: "AluraPic",
+      titulo: "Buscas dinâmicas",
       fotos: [],
       filtro: '',
     }
@@ -63,6 +72,10 @@ export default {
 </script>
 
 <style>
+
+.base {
+  min-height: 70vh;
+}
 
 .lista-fotos {
   list-style: none;

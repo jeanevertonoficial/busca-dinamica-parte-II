@@ -1,16 +1,58 @@
 <template>
-    <button @click="disparaAcao()" class="botao botao-remover" :type="tipo">{{ rotulo }}</button>
+  <button
+      @click="disparaAcao()"
+      class="botao"
+      :class="estiloDoBotao"
+      :type="tipo">{{ rotulo }}
+  </button>
 </template>
 
 <script>
 export default {
-  props : ['tipo', 'rotulo'],
+  props: {
+    tipo: {
+      required: true,
+      type: String
+    },
 
+    rotulo: {
+      required: true,
+      type: String
+    },
+
+    confirmacao: {
+      required: false,
+      default: false,
+      type: Boolean
+    },
+
+    estilo: {
+      required: false,
+      default: 'padrao',
+      type: String
+    }
+  },
   methods: {
     disparaAcao() {
-      if(confirm('Deseja remover esta imagem?')){
-        this.$emit('botaoAtivado');
+      if (this.confirmacao) {
+        if (confirm('Deseja remover esta imagem?')) {
+          this.$emit('botaoAtivado');
+        }
+        return;
       }
+      this.$emit('botaoAtivado');
+    }
+  },
+
+  computed: {
+    estiloDoBotao: function () {
+      let estiloDoBotao;
+      if (this.estilo == 'padrao' || !this.estilo) {
+        estiloDoBotao = 'botao-padrao';
+      } else if (this.estilo == 'remover') {
+        estiloDoBotao = 'botao-remover';
+      }
+      return estiloDoBotao;
     }
   }
 }
@@ -19,6 +61,7 @@ export default {
 <style scoped>
 
 .botao {
+  margin-top: 15px;
   margin-bottom: 1.5rem;
   width: 100px;
   height: 25px;
@@ -31,8 +74,10 @@ export default {
   transition: .5s;
   transform: scale(1.1);
   box-shadow: 0px 0px 0px rgba(152, 148, 148, 0.78);
-  background: #ffc400;
+  background: rgba(229, 149, 28, 0.54);
+  color: #ffffff;
 }
+
 .botao-remover {
   background: rgba(255, 0, 0, 0.96);
   color: white;
