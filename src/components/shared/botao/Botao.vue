@@ -1,6 +1,7 @@
 <template>
   <button
       @click="disparaAcao()"
+      class="botao"
       :class="estiloDoBotao"
       :type="tipo">{{ rotulo }}
   </button>
@@ -47,9 +48,9 @@ export default {
     estiloDoBotao: function () {
       let estiloDoBotao;
       if (this.estilo == 'padrao' || !this.estilo) {
-        estiloDoBotao = 'botao botao-padrao';
+        estiloDoBotao = 'botao-padrao';
       } else if (this.estilo == 'remover') {
-        estiloDoBotao = 'botao botao-remover';
+        estiloDoBotao = 'botao-remover';
       }
       return estiloDoBotao;
     }
@@ -60,8 +61,7 @@ export default {
 <style scoped>
 
 .botao {
-  margin-top: 15px;
-  margin-bottom: 1.5rem;
+  margin: 1rem;
   width: 100px;
   height: 25px;
   box-shadow: -10px 20px 20px rgba(152, 148, 148, 0.78);

@@ -1,24 +1,27 @@
 <template>
   <div>
     <section class="base">
-    <h1 class="titulo">{{ titulo }}</h1>
-    <input type="search" class="filtro" @input="filtro = $event.target.value"
-           placeholder="filtre pelo título da foto">
-    <ul class="lista-fotos">
-      <!-- v-for="foto of fotos" -->
-      <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
-        <painel :titulo="fotos.titulo">
-          <imagem-responsiva v-meu-transform="{ incremento: 15, animate: true }" :url="fotos.url" :titulo="fotos.titulo"/>
-          <botao
-              tipo="button"
-              rotulo="Remover"
-              @botaoAtivado="remove(fotos)"
-              v-bind:confirmacao="false"
-              estilo="padrao"
-          />
-        </painel>
-      </li>
-    </ul>
+      <h1 class="titulo">{{ titulo }}</h1>
+
+      <p v-show="mensagem" class="centralizado mensagem">{{ mensagem }}</p>
+
+      <input type="search" class="filtro" @input="filtro = $event.target.value"
+             placeholder="filtre pelo título da foto">
+      <ul class="lista-fotos">
+        <!-- v-for="foto of fotos" -->
+        <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
+          <painel :titulo="fotos.titulo">
+            <imagem-responsiva v-transform:scale.animate="1.1" :url="fotos.url" :titulo="fotos.titulo"/>
+            <botao
+                tipo="button"
+                rotulo="Remover"
+                @botaoAtivado="remove(fotos)"
+                v-bind:confirmacao="false"
+                estilo='remover'
+            />
+          </painel>
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -41,6 +44,7 @@ export default {
       titulo: "Buscas dinâmicas",
       fotos: [],
       filtro: '',
+      mensagem: ''
     }
   },
   computed: {
@@ -57,21 +61,61 @@ export default {
   // conecxão com a API com as fotos
   created() {
 
-    this.$http.get('http://localhost:3000/v1/fotos')
+    //acessando o resource
+    this.resource = this.$resource('v1/fotos{/id}');
+
+    this.resource
+        .query()
         .then(res => res.json())
         .then(fotos => this.fotos = fotos, err => console.log(err));
+
+    /* metodo http
+    this.$http.get('v1/fotos')
+        .then(res => res.json())
+        .then(fotos => this.fotos = fotos, err => console.log(err));*/
   },
 
   methods: {
+
     remove(foto) {
-      alert('Imagem ' + foto.titulo + ' removida com Sucesso!' );
+
+      //acessando o resource
+
+      this.resource
+          .delete({id: foto._id})
+          .then(
+              () => {
+                let indice = this.fotos.indexOf(foto);
+                this.fotos.splice(indice, 1);
+                this.mensagem = 'Foto removida com sucesso'
+              },
+              err => {
+                this.mensagem = 'Não foi possível remover a foto';
+                console.log(err);
+              }
+          );
+
+      /* metodo http
+
+      this.$http
+          .delete(`v1/fotos/${foto._id}`)
+          .then(() => {
+                let indice = this.fotos.indexOf(foto);
+                this.fotos.splice(indice, 1);
+                this.mensagem = 'Foto removida com sucesso'
+              },
+              err => {
+                console.log(err);
+                this.mensagem = 'Não foi possivel remover a foto';
+              }); */
     }
-  }
+  },
+
 
 }
 </script>
 
-<style>
+<style scoped>
 
 .base {
   min-height: 70vh;
@@ -81,7 +125,7 @@ export default {
   list-style: none;
 }
 
-.lista-fotos{
+.lista-fotos {
   display: flex;
   flex-wrap: wrap;
 }
@@ -99,7 +143,7 @@ export default {
 
 .filtro {
   margin: auto;
-  display:flex;
+  display: flex;
   justify-content: center;
   text-align: center;
   width: 60%;
@@ -109,6 +153,21 @@ export default {
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
   margin-top: 1rem;
   margin-bottom: 2.75rem;
+}
+
+.mensagem {
+  text-align: center;
+  width: 90%;
+
+  color: white;
+
+  margin: auto;
+  padding: 10px;
+  background: #00b91b;
+
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+
+  border-radius: 5px;
 }
 
 </style>

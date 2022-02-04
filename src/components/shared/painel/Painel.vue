@@ -73,5 +73,8 @@ export default {
   transition: opacity .4s;
 }
 
+.painel {
+  overflow: hidden;
+}
 
 </style>
