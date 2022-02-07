@@ -32,7 +32,7 @@ export default {
 
 .nav-li {
   width: auto;
-  display: inline-flex;
+  display: flex;
 
 }
 .nav-ul {

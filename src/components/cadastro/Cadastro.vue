@@ -23,7 +23,7 @@
 
       <div class="centralizado">
         <meu-botao rotulo="GRAVAR" tipo="submit"/>
-        <router-link to="/">
+        <router-link :to="{ name: 'home'}">
           <meu-botao rotulo="VOLTAR" tipo="button"/>
         </router-link>
       </div>
@@ -39,6 +39,7 @@
 import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva";
 import Botao from "../shared/botao/Botao";
 import Foto from "../../domain/foto/Foto";
+import FotoService from "../../domain/foto/FotoService";
 
 export default {
 
@@ -57,17 +58,13 @@ export default {
   methods: {
     grava() {
       console.log(this.foto);
-      //pegando o caminho absoluto da API, pelo metodo http
-      // this.$http.post('v1/fotos', this.foto)
-
-      this.resource
-          .save(this.foto)
+      this.service
+          .cadastra(this.foto)
           .then(() => this.foto = new Foto(), err => console.log(err));
     }
   },
   created() {
-
-    this.resource = this.$resource('v1/fotos');
+    this.service = new FotoService(this.$resource);
   }
 }
 </script>
