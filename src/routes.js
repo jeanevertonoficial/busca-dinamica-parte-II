@@ -4,5 +4,6 @@ import Home from "@/components/home/home";
 export const routes = [
     { path: '/', name: 'home',component: Home, titulo: 'Home', menu: true},
     { path: '/cadastro', name: 'cadastro', component: Cadastro, titulo: 'Cadastro', menu: true},
+    { path: '/alterar/:id', name: 'cadastro', component: Cadastro, titulo: 'Cadastro', menu: false},
     { path: '*', component: Home, menu: false}
 ];
