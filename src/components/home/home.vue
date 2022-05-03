@@ -12,6 +12,8 @@
         <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
           <painel :titulo="fotos.titulo">
             <imagem-responsiva v-transform:scale.animate="1.1" :url="fotos.url" :titulo="fotos.titulo"/>
+
+
             <botao
                 tipo="button"
                 rotulo="Remover"
