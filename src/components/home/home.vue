@@ -11,22 +11,30 @@
         <!-- v-for="foto of fotos" -->
         <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
           <painel :titulo="fotos.titulo">
-            <imagem-responsiva class="imagem" v-transform:scale.animate="1.1" :url="fotos.url" :titulo="fotos.titulo"/>
-
-            <router-link :to="{ name: 'alterar', params: { id: fotos._id } }">
-              <botao
-                  rotulo="Alterar"
-                  tipo="button"
+            <div class="container-foto">
+              <imagem-responsiva
+                  class="imagem"
+                  v-transform:scale.animate="1.1"
+                  :url="fotos.url"
+                  :titulo="fotos.titulo"
               />
-            </router-link>
+            </div>
+            <div class="div-botoes">
+              <router-link :to="{ name: 'alterar', params: { id: fotos._id } }">
+                <botao
+                    rotulo="Alterar"
+                    tipo="button"
+                />
+              </router-link>
 
-            <botao
-                tipo="button"
-                rotulo="Remover"
-                @botaoAtivado="remove(fotos)"
-                v-bind:confirmacao="false"
-                estilo='remover'
-            />
+              <botao
+                  tipo="button"
+                  rotulo="Remover"
+                  @botaoAtivado="remove(fotos)"
+                  v-bind:confirmacao="false"
+                  estilo='remover'
+              />
+            </div>
           </painel>
         </li>
       </ul>
@@ -112,15 +120,26 @@ export default {
 .lista-fotos {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .lista-fotos .lista-fotos-item {
   margin-bottom: 2rem;
+  min-height: 300px;
 }
-.imagem, .div-foto {
+
+.imagem {
   width: 100%;
+  object-fit: cover;
+  height: 110px;
+  transition: 1s;
 }
+
+.imagem:hover {
+  transition: 2s;
+  object-fit: contain;
+}
+
 .titulo {
   text-align: center;
   text-transform: uppercase;
@@ -157,4 +176,20 @@ export default {
   border-radius: 5px;
 }
 
+.container-foto {
+  height: auto;
+}
+
+.div-botoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 551px) {
+  .lista-fotos {
+    justify-content: center;
+  }
+}
 </style>
