@@ -19,6 +19,7 @@
                   :titulo="fotos.titulo"
               />
             </div>
+
             <div class="div-botoes">
               <router-link :to="{ name: 'alterar', params: { id: fotos._id } }">
                 <botao
