@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="base">
+    <section class="container base">
       <h1 class="titulo">{{ titulo }}</h1>
 
       <p v-show="mensagem" class="centralizado mensagem">{{ mensagem }}</p>
@@ -106,6 +106,7 @@ export default {
 .lista-fotos {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .lista-fotos .lista-fotos-item {

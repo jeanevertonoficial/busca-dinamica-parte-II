@@ -6,14 +6,23 @@
       </div>
       <p>Site com as facilidades do Vue.js</p>
       <div slot="footer-rodape">
-        <p>copyright 2022</p>
+        <p>copyright {{ano}}</p>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-export default {}
+var anoAtual = new Date();
+var year = anoAtual.getFullYear()
+
+export default {
+  data(){
+    return {
+      ano: year
+    }
+  }
+}
 
 </script>
 
