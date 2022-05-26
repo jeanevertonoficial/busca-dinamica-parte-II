@@ -11,8 +11,14 @@
         <!-- v-for="foto of fotos" -->
         <li class="lista-fotos-item" v-for="fotos of fotosComFiltro" :key="fotos.id">
           <painel :titulo="fotos.titulo">
-            <imagem-responsiva v-transform:scale.animate="1.1" :url="fotos.url" :titulo="fotos.titulo"/>
+            <imagem-responsiva class="imagem" v-transform:scale.animate="1.1" :url="fotos.url" :titulo="fotos.titulo"/>
 
+            <router-link :to="{ name: 'alterar', params: { id: fotos._id } }">
+              <botao
+                  rotulo="Alterar"
+                  tipo="button"
+              />
+            </router-link>
 
             <botao
                 tipo="button"
@@ -112,7 +118,9 @@ export default {
 .lista-fotos .lista-fotos-item {
   margin-bottom: 2rem;
 }
-
+.imagem, .div-foto {
+  width: 100%;
+}
 .titulo {
   text-align: center;
   text-transform: uppercase;

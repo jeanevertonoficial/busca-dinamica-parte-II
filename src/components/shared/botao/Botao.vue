@@ -61,9 +61,9 @@ export default {
 <style scoped>
 
 .botao {
-  margin: 1rem;
-  width: 100px;
-  height: 25px;
+  margin: 0.50rem;
+
+  min-width: 100px;
   box-shadow: -10px 20px 20px rgba(152, 148, 148, 0.78);
   border-radius: 10px;
   border: none;

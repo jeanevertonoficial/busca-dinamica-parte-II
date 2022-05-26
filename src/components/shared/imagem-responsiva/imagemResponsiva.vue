@@ -1,5 +1,7 @@
 <template>
-  <img class="imagem-responsiva" :src="url" :alt="titulo">
+
+    <img class="imagem-responsiva" :src="url" :alt="titulo">
+
 </template>
 
 <script>
@@ -12,8 +14,11 @@ export default {
 <style scoped>
 
 .imagem-responsiva {
+  width: 50%;
+  transition: 1s;
   display: flex;
-  width: 100%;
+  justify-content: start;
 }
+
 
 </style>

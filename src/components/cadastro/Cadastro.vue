@@ -12,7 +12,9 @@
       <div class="controle">
         <label class="url" for="url">URL</label>
         <input id="url" autocomplete="off" v-model.lazy="foto.url">
-        <imagem-responsiva v-transform:scale.animate="1.2" v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
+        <div class="div-foto">
+          <imagem-responsiva v-transform:scale.animate="1.1" v-show="foto.url" :url="foto.url" :titulo="foto.titulo"/>
+        </div>
       </div>
 
       <div class="controle">
@@ -52,12 +54,12 @@ export default {
   data() {
     return {
       foto: new Foto(),
-      resource: {}
+      resource: {},
+      id: this.$route.params.id
     }
   },
   methods: {
     grava() {
-      console.log(this.foto);
       this.service
           .cadastra(this.foto)
           .then(() => this.foto = new Foto(), err => console.log(err));
@@ -65,6 +67,12 @@ export default {
   },
   created() {
     this.service = new FotoService(this.$resource);
+
+    if (this.id) {
+      this.service
+          .busca(this.id)
+          .then(foto => this.foto = foto)
+    }
   }
 }
 </script>
@@ -121,4 +129,11 @@ export default {
   color: rgba(229, 201, 18, 0.82)
 }
 
+.div-foto {
+  transition: 0.7ms;
+  justify-content: center;
+  display: flex;
+  margin: 15px auto;
+  width: 50%;
+}
 </style>
