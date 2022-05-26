@@ -3,6 +3,9 @@
     <h1 class="centralizado">Cadastro</h1>
     <h2 class="centralizado">{{ foto.titulo }}</h2>
 
+    <h2 v-if="foto._id" class="centralizado">Alterando</h2>
+    <h2 v-else class="centralizado">Incluindo novo elemento</h2>
+
     <form class="form-cad" @submit.prevent="grava()">
       <div class="controle">
         <label class="titulo-cad" for="titulo">TÍTULO</label>
@@ -42,6 +45,7 @@ import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva";
 import Botao from "../shared/botao/Botao";
 import Foto from "../../domain/foto/Foto";
 import FotoService from "../../domain/foto/FotoService";
+import home from "@/components/home/home";
 
 export default {
 
@@ -62,7 +66,11 @@ export default {
     grava() {
       this.service
           .cadastra(this.foto)
-          .then(() => this.foto = new Foto(), err => console.log(err));
+          .then(() => {
+            // if se a condição ao salvar for editar a foto, ele vai para home se estiver id
+            if (this.id) this.$router.push({ name: home });
+            this.foto = new Foto();
+          }, err => console.log(err));
     }
   },
   created() {
